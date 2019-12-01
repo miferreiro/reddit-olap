@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<th:block th:fragment="head">
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+			<a class="navbar-brand" th:href="@{/}">Reddit</a>
+			<div class="collapse navbar-collapse" id="navbars">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" th:href="@{/users}">Usuarios</a></li>
+				</ul>
+			</div>
+		</nav>
+	</th:block>
+</body>
+</html>
+
+

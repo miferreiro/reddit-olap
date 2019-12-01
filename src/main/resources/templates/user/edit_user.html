@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout::layout(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Editar/crear usuario</title>
+</head>
+
+<body>
+	<h1 class="center-text" th:with="text=${isNew} ? 'Crear usuario' : 'Editar usuario'"></h1>
+
+	<form th:object="${user}" class="form-horizontal" id="user-form" method="post">
+		<div class="form-group has-feedback">
+
+			<div class="form-group">
+				<label class="col-2 control-label">DNI</label>
+				<input class="col-10 form-control" th:field="*{DNI}" size="9" maxlength="9" required="required" />
+				<label class="col-2 control-label">Nombre</label>
+				<input class="col-10 form-control" th:field="*{nombre}" size="30" maxlength="100" />
+				<label class="col-2 control-label">Trofeos</label>
+				<input class="col-10 form-control" th:field="*{trophies}" size="30" maxlength="100" />
+			</div>
+			<div class="form-group">
+				<button class="btn btn-lg btn-block btn-primary col-2" 
+				th:with="text=${isNew} ? 'Crear' : 'Guardar'"  type="submit" th:text="${text}">
+					Guardar</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
