@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
-	<th:block th:fragment="head">
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-			<a class="navbar-brand" th:href="@{/}">Reddit</a>
-			<div class="collapse navbar-collapse" id="navbars">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" th:href="@{/users}">Usuarios</a></li>
-				</ul>
-			</div>
-		</nav>
-	</th:block>
-</body>
-</html>
+<th:block th:fragment="head">
+	<title>Reddit OLAP</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Bootstrap -->
+	<link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet" media="screen">
+	<!-- Styles custom -->
+	<link th:href="@{/resources/css/styles.css}" rel="stylesheet" media="screen">
+</th:block>
+
 
 

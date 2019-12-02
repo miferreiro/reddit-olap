@@ -1,16 +1,26 @@
 <!DOCTYPE html>
-<html
-	th:replace="~{fragmentos/layout::layout(~{this::title}, ~{this::body})}"
-	xmlns:th="http://www.thymeleaf.org">
-
+<html th:fragment="layout (titulo, contenido)" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Página principal</title>
+	<th:block th:replace="fragments/head::head"/>
 </head>
 
 <body>
-	<div class="jumbotron text-center">
-		<h1 class="cover-heading">OLTP REDDIT</h1>
-		<p class="lead">OLTP REDDIT</p>
-	</div>
+	<!-- Header fragment -->
+	<header>
+		<th:block th:replace="fragments/header::header"/>
+	</header>	
+	<hr/>
+	<main role="main" class="container pt-5">
+		<div class="container-fluid">
+			<h1>Pagina de inicio</h1>
+		</div>
+	</main>
+	
+	<!-- Footer fragment -->
+	<th:block th:replace="fragments/footer::footer"/>
+
+	<script th:src="@{/resources/js/jquery.min.js}"></script>
+	<script th:src="@{/resources/js/jquery-ui.min.js}"></script>
+	<script th:src="@{/resources/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
