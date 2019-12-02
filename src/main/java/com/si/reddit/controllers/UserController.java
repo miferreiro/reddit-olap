@@ -29,6 +29,7 @@ public class UserController {
 	public String prepararListarClientes(Model model) {
 		List<User> users = userService.searchAll();
 		model.addAttribute("users", users);
+		model.addAttribute("DNI", "");
 		model.addAttribute("name", "");
 		model.addAttribute("numTrophies", "");
 		return "user/list_users";
@@ -58,7 +59,7 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("new")
+	@GetMapping("add_user")
 	public String prepararNuevoCliente(Model model) {
 		User user = new User();
 		model.addAttribute("user", user);
@@ -66,12 +67,11 @@ public class UserController {
 		return "user/edit_user";
 	}
 	
-	@PostMapping("new")
+	@PostMapping("add_user")
 	public String crearCliente(@ModelAttribute User user) {
 		userService.create(user);
 		return "redirect:/users";
 	}
-
 	
 	@GetMapping("{dni}")
 	public String prepararEditarCliente(@PathVariable("dni") String dni, Model model) {
