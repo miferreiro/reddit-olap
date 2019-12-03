@@ -1,0 +1,36 @@
+<body th:replace="~{fragments/layout::layout(~{this::body})}">
+	<h1 class="center-text">Listado de subreddits</h1>
+	<br/>
+	<form th:action="@{/subreddits}" method="post" id="buscar-form">
+		<div class="form-group row">
+			<label for="name" class="col-2 control-label font-weight-bold" style="font-size:20px">Nombre:</label>
+			<div class="col-sm-7 ">
+				<input class="form-control" th:name="nameSubreddit" size="30" maxlength="80" placeholder="Introducir nombre a buscar..." />
+			</div>
+			<div class="col-sm-3">
+				<button type="submit" class="btn btn-block btn-outline-info">Buscar</button>
+			</div>
+		</div>		
+	</form>
+	<a class="btn btn-block btn-primary" th:href="@{/subreddits/add_subreddit}">A&#241;adir nuevo subreddit</a>
+	<br/>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="text-center">Nombre</th>
+				<th class="text-center">Descripcion</th>
+				<th class="text-center">Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="subreddit : ${subreddits}">
+				<td class="text-center" th:text="${subreddit.name}"/>
+				<td class="text-center" th:text="${subreddit.description}"/>
+				<td class="text-center">
+					<a class="btn btn-primary" th:href="@{/subreddits/__${subreddit.id}__}">Editar</a> 
+					<a class="btn btn-danger" th:href="@{/subreddits/__${subreddit.id}__/remove}">Borrar</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>

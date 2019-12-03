@@ -17,7 +17,6 @@ public class Subreddit implements Serializable{
 
     private String description;
 
-
     public Subreddit() {
     }
 
@@ -34,12 +33,12 @@ public class Subreddit implements Serializable{
         this.id = id;
     }
 
-    public String getNombre() {
+    public String getName() {
         return name;
     }
 
-    public void setNombre(String nombre) {
-        this.name = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

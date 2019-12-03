@@ -1,0 +1,29 @@
+<body th:replace="~{fragments/layout::layout(~{this::body})}" >
+
+	<h1 class="center-text" th:text="${isNew} ? 'Crear subreddit' : 'Editar subreddit'" ></h1>
+	<br/>
+	<form th:object="${subreddit}"id="subreddit-form" method="post">
+		<div class="form-group row">
+			<label for="Id" class="col-sm-3 control-label">Id</label>
+			<label class="col-sm-4 form-control btn btn-outline-info" th:text="${isNew} ? 'Id not yet assigned' : *{id}" />
+		</div>	
+		<div class="form-group row">
+			<label for="name" class="col-sm-3 control-label">Nombre</label>
+			<div class="col-sm-4">
+				<input class="form-control" th:field="*{name}" size="30" maxlength="30" placeholder="Introducir nombre..."/>
+			</div>	
+		</div>	
+		<div class="form-group row">
+			<label for="description" class="col-sm-3 control-label">Descripcion</label>
+			<div class="col-sm-4">
+				<input class="form-control" th:field="*{description}" size="60" maxlength="60" placeholder="Introducir descripcion..."/>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-3">
+				<button type="submit" class="btn btn-lg btn-block btn-primary" th:with="text=${isNew} ? 'Crear' : 'Guardar'" th:text="${text}">
+				Guardar</button>
+			</div>
+		</div>
+	</form>
+</body>
