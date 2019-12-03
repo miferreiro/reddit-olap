@@ -14,23 +14,24 @@
 	</form>
 	<a class="btn btn-block btn-primary" th:href="@{/subreddits/add_subreddit}">A&#241;adir nuevo subreddit</a>
 	<br/>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th class="text-center">Nombre</th>
-				<th class="text-center">Descripcion</th>
-				<th class="text-center">Acciones</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="subreddit : ${subreddits}">
-				<td class="text-center" th:text="${subreddit.name}"/>
-				<td class="text-center" th:text="${subreddit.description}"/>
-				<td class="text-center">
-					<a class="btn btn-primary" th:href="@{/subreddits/__${subreddit.id}__}">Editar</a> 
-					<a class="btn btn-danger" th:href="@{/subreddits/__${subreddit.id}__/remove}">Borrar</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="album py-5 bg-light">
+		<div class="container">
+	    	<div class="row" >
+	        	<div class="col-md-4" th:each="subreddit : ${subreddits}">
+	          		<div class="card mb-4 box-shadow">
+	            		<h4 th:text="@{Nombre: __${subreddit.name}__}" class="text-center"></h4>
+	            		<div class="card-body">
+	            			<p class="card-text" th:text="@{Descripcion: __${subreddit.description}__}"></p>
+	            			<div class="d-flex justify-content-between align-items-center">
+	            				<div class="btn-group">
+	            					<a class="btn btn-sm btn-outline-secondary" th:href="@{/subreddits/__${subreddit.id}__}" >Editar</a>
+									<a class="btn btn-sm btn-outline-secondary" th:href="@{/subreddits/__${subreddit.id}__/remove}">Borrar</a>
+								</div>
+							</div>
+	          			</div>
+	          		</div>
+	          	</div>	
+	    	</div>
+	    </div>
+    </div>
 </body>
