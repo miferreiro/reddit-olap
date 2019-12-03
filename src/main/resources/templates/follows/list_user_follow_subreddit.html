@@ -1,0 +1,40 @@
+<body th:replace="~{fragments/layout::layout(~{this::body})}">
+	<h1 class="center-text">Listado de usuarios que siguen al subreddit ...</h1>
+	<br/>
+	<form th:action="@{/follows}" method="post" id="buscar-form">
+		<div class="form-group row">
+			<label for="name" class="col-2 control-label font-weight-bold" style="font-size:20px">Nombre:</label>
+			<div class="col-sm-7 ">
+				<input class="form-control" th:name="nameUser" size="30" maxlength="80" placeholder="Introducir nombre a buscar..." />
+			</div>
+			<div class="col-sm-3">
+				<button type="submit" class="btn btn-block btn-outline-info">Buscar</button>
+			</div>
+		</div>		
+	</form>
+	<a class="btn btn-block btn-primary" th:href="@{/folllows/add_user_follow_subreddit}">A&#241;adir nuevo seguidor a un subreddit</a>
+	<br/>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="text-center">DNI</th>
+				<th class="text-center">Nombre de usuario</th>
+				<th class="text-center">Nombre de subreddit</th>
+				<th class="text-center">Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="follow : ${usersFollowSubreddit}">
+				<td class="text-center">
+					<a th:href="@{/users/__${follow.user.DNI}__}" th:text="${follow.user.DNI}" /></a>
+				</td>
+				<td class="text-center" th:text="${follow.user.name}"/>
+				<td class="text-center" th:text="${follow.subreddit.name}"/>
+				<td class="text-center">
+					<a class="btn btn-primary" th:href="@{/follows/__${follow.user.DNI}__}">Editar</a> 
+					<a class="btn btn-danger" th:href="@{/follows/__${follow.user.DNI}__/remove}">Borrar</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
