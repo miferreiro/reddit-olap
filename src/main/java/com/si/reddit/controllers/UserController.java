@@ -26,7 +26,7 @@ public class UserController {
 	UserService userService;
 
 	@GetMapping
-	public String prepararListarClientes(Model model) {
+	public String listUsers(Model model) {
 		List<User> users = userService.searchAll();
 		model.addAttribute("users", users);
 		model.addAttribute("DNI", "");
@@ -36,10 +36,10 @@ public class UserController {
 	}
 
 	@PostMapping
-	public String refreshListUsers(@RequestParam(required = false) String userName,  Model model) {
+	public String refreshListUsers(@RequestParam(required = false) String nameUser,  Model model) {
 		List<User> users;
-		if ((userName != null) && !userName.isEmpty()) {
-			users = userService.searchByName(userName);
+		if ((nameUser != null) && !nameUser.isEmpty()) {
+			users = userService.searchByName(nameUser);
 		} else {
 			users = userService.searchAll();
 		}
@@ -48,19 +48,20 @@ public class UserController {
 	}
 
 	@GetMapping("{dni}/remove")
-	public String borrarCliente(@PathVariable("dni") String dni, Model model) {
+	public String removeUser(@PathVariable("dni") String dni, Model model) {
 		User user = userService.searchByDNI(dni);
 		if (user != null) {
 			userService.remove(user);
 			return "redirect:/users";
 		} else {
-			model.addAttribute("messageError", "User not found");
+			model.addAttribute("messageError", "Usuario no encontrado");
+			model.addAttribute("pageToReturn", "users");
 			return "error";
 		}
 	}
 
 	@GetMapping("add_user")
-	public String prepararNuevoCliente(Model model) {
+	public String addUserView(Model model) {
 		User user = new User();
 		model.addAttribute("user", user);
 		model.addAttribute("isNew", true);
@@ -68,20 +69,21 @@ public class UserController {
 	}
 	
 	@PostMapping("add_user")
-	public String crearCliente(@ModelAttribute User user) {
+	public String createUser(@ModelAttribute User user) {
 		userService.create(user);
 		return "redirect:/users";
 	}
 	
 	@GetMapping("{dni}")
-	public String prepararEditarCliente(@PathVariable("dni") String dni, Model model) {
+	public String editUserView(@PathVariable("dni") String dni, Model model) {
 		User user = userService.searchByDNI(dni);
 		if (user != null) {
 			model.addAttribute("user", user);
 			model.addAttribute("isNew", false);
 			return "user/edit_user";
 		} else {
-			model.addAttribute("messageError", "User not found");
+			model.addAttribute("messageError", "Usuario no encontrado");
+			model.addAttribute("pageToReturn", "users");
 			return "error";
 		}
 	}

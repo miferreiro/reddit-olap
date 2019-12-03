@@ -1,50 +1,40 @@
 <body th:replace="~{fragments/layout::layout(~{this::body})}">
-
 	<h1 class="center-text">Listado de usuarios</h1>
-	
-	<form th:action="@{/users}" method="post" class="form-horizontal" id="buscar-form">
-		<div class="row">
-			<div class="col-10 form-group">
-				<div class="control-group" id="name">
-					<label class="col-4 control-label">Nombre</label>
-					<input class="col-10 form-control" th:name="nameUser" size="30" maxlength="80" />
-				</div>
-				<div class="control-group" id="trophies">
-					<label class="col-4 control-label">Numero de trofeos</label>
-					<input class="col-10 form-control" th:name="trophies" size="30" maxlength="80" />
-				</div>
-			</div>
-			<div class="col-2 form-group">
-				<button type="submit" class="btn btn-lg btn-block btn-primary">Buscar</button>
-				<button type="submit" class="btn btn-lg btn-block btn-primary">Buscar todos</button>
-			</div>
-		</div>
-	</form>
-
-	<a class="col-2 btn btn-lg btn-block btn-primary" th:href="@{/users/add_user}">Nuevo usuario</a>
 	<br/>
-	<table id="clientes" class="table table-striped">
+	<form th:action="@{/users}" method="post" id="buscar-form">
+		<div class="form-group row">
+			<label for="name" class="col-2 control-label font-weight-bold" style="font-size:20px">Nombre:</label>
+			<div class="col-sm-7 ">
+				<input class="form-control" th:name="nameUser" size="30" maxlength="80" placeholder="Introducir nombre a buscar..." />
+			</div>
+			<div class="col-sm-3">
+				<button type="submit" class="btn btn-block btn-outline-info">Buscar</button>
+			</div>
+		</div>		
+	</form>
+	<a class="btn btn-block btn-primary" th:href="@{/users/add_user}">A&#241;adir nuevo usuario</a>
+	<br/>
+	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>DNI</th>
-				<th>Nombre</th>
-				<th>Numero de trofeos</th>
-				<th/>
+				<th class="text-center">DNI</th>
+				<th class="text-center">Nombre</th>
+				<th class="text-center">Numero de trofeos</th>
+				<th class="text-center">Acciones</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="user : ${users}">
-				<td>
+				<td class="text-center">
 					<a th:href="@{/users/__${user.DNI}__}" th:text="${user.DNI}" /></a>
 				</td>
-				<td th:text="${user.name}"/>
-				<td th:text="${user.numTrophies}"/>
-				<td>
+				<td class="text-center" th:text="${user.name}"/>
+				<td class="text-center" th:text="${user.numTrophies}"/>
+				<td class="text-center">
 					<a class="btn btn-primary" th:href="@{/users/__${user.DNI}__}">Editar</a> 
-					<a class="btn btn-primary" th:href="@{/users/__${user.DNI}__/remove}">Borrar</a>
+					<a class="btn btn-danger" th:href="@{/users/__${user.DNI}__/remove}">Borrar</a>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-
 </body>
