@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@IdClass(UserFollowSubreddit.class)
+@IdClass(UserFollowSubredditID.class)
 public class UserFollowSubreddit implements Serializable{
     @Id
     @ManyToOne

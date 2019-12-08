@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.si.reddit.daos.UserFollowSubredditDAO;
+import com.si.reddit.entities.User;
+import com.si.reddit.entities.Subreddit;
 import com.si.reddit.entities.UserFollowSubreddit;
+import com.si.reddit.entities.UserFollowSubredditID;
 
 @Service
 public class UserFollowSubredditServiceImpl implements UserFollowSubredditService {
@@ -28,8 +31,8 @@ public class UserFollowSubredditServiceImpl implements UserFollowSubredditServic
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserFollowSubreddit searchByIds(String dni, Long id) {
-		return dao.getOne(dni);
+	public UserFollowSubreddit searchByIds(String DNI, Long id) {
+		return dao.getOne(new UserFollowSubredditID(DNI,id));
 	}
 
 	@Override

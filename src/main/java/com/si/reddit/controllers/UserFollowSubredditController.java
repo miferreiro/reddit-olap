@@ -19,12 +19,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.si.reddit.entities.UserFollowSubreddit;
 import com.si.reddit.services.UserFollowSubredditService;
 
+import com.si.reddit.entities.User;
+import com.si.reddit.services.UserService;
+
+import com.si.reddit.entities.Subreddit;
+import com.si.reddit.services.SubredditService;
+
 @Controller
 @RequestMapping("/follows")
 public class UserFollowSubredditController {
 	@Autowired
 	UserFollowSubredditService userFollowSubredditService;
-
+	@Autowired
+	UserService userService;
+	@Autowired
+	SubredditService subredditService;
 	@GetMapping
 	public String listUsersFollowSubreddit(Model model) {
 		List<UserFollowSubreddit> usersFollowSubreddit = userFollowSubredditService.searchAll();
@@ -46,7 +55,7 @@ public class UserFollowSubredditController {
 	}
 /*
 	@GetMapping("{dni}/{id}/remove")
-	public String removeUserFollowSubreddit(@PathVariable("dni") String dni, Long id, Model model) {
+	public String removeUserFollowSubreddit(@PathVariable("dni") Long dni, Long id, Model model) {
 		UserFollowSubreddit userFollowSubreddit = userFollowSubredditService.searchByIds(dni, id);
 		if (userFollowSubreddit != null) {
 			userFollowSubredditService.remove(userFollowSubreddit);
@@ -57,19 +66,24 @@ public class UserFollowSubredditController {
 			return "error";
 		}
 	}
+	*/
 
 	@GetMapping("add_user_follow_subreddit")
 	public String addUserFollowSubredditView(Model model) {
 		UserFollowSubreddit userFollowSubreddit = new UserFollowSubreddit();
-		model.addAttribute("userFollowSubreddit", userFollowSubreddit);
-		model.addAttribute("isNew", true);
-		return "follows/edit_user_follow_subreddit";
+		List<User> users = userService.searchAll();
+		List<Subreddit> subreddits = subredditService.searchAll();
+		model.addAttribute("users", users);
+		model.addAttribute("subreddits", subreddits);
+		return "follows/add_user_follow_subreddit";
 	}
 	
 	@PostMapping("add_user_follow_subreddit")
-	public String createUserFollowSubredditView(@ModelAttribute UserFollowSubreddit userFollowSubreddit) {
-		userFollowSubredditService.create(userFollowSubreddit);
+	public String createUserFollowSubredditView(String user, Long subreddit) {
+		User userObject = userService.searchByDNI(user);
+		
+		Subreddit subredditObject = subredditService.searchById(Long.valueOf(subreddit));
+		userFollowSubredditService.create(new UserFollowSubreddit(userObject, subredditObject));
 		return "redirect:/follows";
 	}
-	*/
 }
