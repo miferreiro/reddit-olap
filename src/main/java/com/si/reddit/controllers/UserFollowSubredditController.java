@@ -53,20 +53,19 @@ public class UserFollowSubredditController {
 		model.addAttribute("usersFollowSubreddit", usersFollowSubreddit);
 		return "follows/list_user_follow_subreddit";
 	}
-/*
-	@GetMapping("{dni}/{id}/remove")
-	public String removeUserFollowSubreddit(@PathVariable("dni") Long dni, Long id, Model model) {
-		UserFollowSubreddit userFollowSubreddit = userFollowSubredditService.searchByIds(dni, id);
+
+	@GetMapping("{id}/{DNI}/remove")
+	public String removeUserFollowSubreddit(@PathVariable("id") Long id, @PathVariable("DNI") String DNI, Model model) {
+		UserFollowSubreddit userFollowSubreddit = userFollowSubredditService.searchByIds(DNI, id);
 		if (userFollowSubreddit != null) {
 			userFollowSubredditService.remove(userFollowSubreddit);
 			return "redirect:/follows";
 		} else {
-			model.addAttribute("messageError", "Seguidor " + dni + " de " + id + " no encontrado");
+			model.addAttribute("messageError", "Seguidor " + DNI + " de " + id + " no encontrado");
 			model.addAttribute("pageToReturn", "follows");
 			return "error";
 		}
 	}
-	*/
 
 	@GetMapping("add_user_follow_subreddit")
 	public String addUserFollowSubredditView(Model model) {

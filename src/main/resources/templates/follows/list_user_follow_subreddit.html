@@ -31,8 +31,7 @@
 				<td class="text-center" th:text="${follow.user.name}"/>
 				<td class="text-center" th:text="${follow.subreddit.name}"/>
 				<td class="text-center">
-					<a class="btn btn-primary" th:href="@{/follows/__${follow.user.DNI}__}">Editar</a> 
-					<a class="btn btn-danger" th:href="@{/follows/__${follow.user.DNI}__/remove}">Borrar</a>
+					<a class="btn btn-danger" th:href="@{/follows/__${follow.subreddit.id}__/__${follow.user.DNI}__/remove}">Borrar</a>
 				</td>
 			</tr>
 		</tbody>
