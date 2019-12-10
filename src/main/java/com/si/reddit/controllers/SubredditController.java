@@ -69,9 +69,13 @@ public class SubredditController {
 	}
 	
 	@PostMapping("add_subreddit")
-	public String createSubreddit(@ModelAttribute Subreddit subreddit) {
-		subredditService.create(subreddit);
-		return "redirect:/subreddits";
+	public String createSubreddit(@Valid @ModelAttribute Subreddit subreddit, BindingResult result) {
+		if (!result.hasErrors()) {
+			subredditService.create(subreddit);
+			return "redirect:/subreddits";
+		} else {
+			return null;
+		}
 	}
 	
 	@GetMapping("{id}")
@@ -89,9 +93,13 @@ public class SubredditController {
 	}
 
 	@PostMapping("{id}")
-	public String refreshSubreddit(@Valid Subreddit subreddit, BindingResult resul) {
-		subredditService.edit(subreddit);
-		return "redirect:/subreddits";
+	public String refreshSubreddit(@Valid Subreddit subreddit, BindingResult result) {
+		if (!result.hasErrors()) {
+			subredditService.edit(subreddit);
+			return "redirect:/subreddits";
+		} else {
+			return null;
+		}
 	}
 
 }

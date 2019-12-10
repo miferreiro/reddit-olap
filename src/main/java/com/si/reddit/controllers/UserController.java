@@ -2,6 +2,7 @@ package com.si.reddit.controllers;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,19 +70,23 @@ public class UserController {
 	}
 	
 	@PostMapping("add_user")
-	public String createUser(@ModelAttribute User user) {
-		userService.create(user);
-		return "redirect:/users";
+	public String createUser(@Valid @ModelAttribute User user, BindingResult result) {
+		if (!result.hasErrors()) {
+			userService.create(user);
+			return "redirect:/users";
+		} else {
+			return null;
+		}
 	}
 	
 	@GetMapping("{dni}")
 	public String editUserView(@PathVariable("dni") String dni, Model model) {
-		User user = userService.searchByDNI(dni);
-		if (user != null) {
+		try {
+			User user = userService.searchByDNI(dni);
 			model.addAttribute("user", user);
 			model.addAttribute("isNew", false);
 			return "user/edit_user";
-		} else {
+		} catch (EntityNotFoundException e) {
 			model.addAttribute("messageError", "Usuario no encontrado");
 			model.addAttribute("pageToReturn", "users");
 			return "error";
@@ -89,9 +94,13 @@ public class UserController {
 	}
 
 	@PostMapping("{dni}")
-	public String refreshUser(@Valid User user, BindingResult resul) {
-		userService.edit(user);
-		return "redirect:/users";
+	public String refreshUser(@Valid User user, BindingResult result) {
+		if (!result.hasErrors()) {
+			userService.edit(user);
+			return "redirect:/users";
+		} else {
+			return null;
+		}
 	}
 
 }
