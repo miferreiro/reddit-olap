@@ -19,7 +19,8 @@
 	    	<div class="row" >
 	        	<div class="col-md-4" th:each="subreddit : ${subreddits}">
 	          		<div class="card mb-4 box-shadow">
-	            		<h4 th:text="@{Nombre: __${subreddit.name}__}" class="text-center"></h4>
+	            		<h4 th:text="@{Nombre: __${subreddit.name}__}" class="text-center p-3"></h4>
+	            		<hr/>
 	            		<div class="card-body">
 	            			<p class="card-text" th:text="@{Descripcion: __${subreddit.description}__}"></p>
 	            			<div class="d-flex justify-content-between align-items-center">
