@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.si.reddit.daos.UserFollowSubredditDAO;
-import com.si.reddit.entities.User;
-import com.si.reddit.entities.Subreddit;
 import com.si.reddit.entities.UserFollowSubreddit;
 import com.si.reddit.entities.UserFollowSubredditID;
 
