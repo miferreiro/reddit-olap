@@ -4,17 +4,17 @@
 	<br/>
 	<form id="userFollowSubreddit-form" method="post">
 		<div class="form-group row">
-			<label for="user" class="col-sm-3 control-label">DNI</label>
+			<label for="user" class="col-sm-3 control-label font-weight-bold" style="font-size:20px">DNI:</label>
 			<div class="col-sm-4">
-				<select th:name="user" >
+				<select class="custom-select" th:name="user" >
 					<option th:each="user : ${users}" th:value="${user.DNI}" th:text="${user.name}" /></option>
 				</select>			
 			</div>
 		</div>
 		<div class="form-group row">
-			<label for="subreddit" class="col-sm-3 control-label">Nombre de subreddit</label>
+			<label for="subreddit" class="col-sm-3 control-label font-weight-bold" style="font-size:20px">Nombre de subreddit:</label>
 			<div class="col-sm-4">
-				<select th:name="subreddit" >
+				<select class="custom-select" th:name="subreddit" >
 					<option th:each="subreddit : ${subreddits}" th:value="${subreddit.id}" th:text="${subreddit.name}" /></option>
 				</select>
 			</div>	
