@@ -9,5 +9,5 @@ public interface UserService {
 	public void remove(User user);
 	public User searchByDNI(String dni);
 	public List<User> searchAll();
-	public List<User> searchByName(String pattern);
+	public List<User> searchByName(String name);
 }

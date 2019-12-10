@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<User> searchByName(String pattern) {
-		return dao.findByNameContaining(pattern);
+	public List<User> searchByName(String name) {
+		return dao.findByName(name);
 	}
 }

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.si.reddit.entities.User;
+import com.si.reddit.entities.UserFollowSubreddit;
+import com.si.reddit.services.UserFollowSubredditService;
 import com.si.reddit.services.UserService;
 
 @Controller
@@ -26,6 +28,9 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	UserFollowSubredditService userFollowSubredditService;
+	
 	@GetMapping
 	public String listUsers(Model model) {
 		List<User> users = userService.searchAll();
@@ -50,10 +55,17 @@ public class UserController {
 
 	@GetMapping("{dni}/remove")
 	public String removeUser(@PathVariable("dni") String dni, Model model) {
-		User user = userService.searchByDNI(dni);
+		User user = userService.searchByDNI(dni);	
 		if (user != null) {
-			userService.remove(user);
-			return "redirect:/users";
+			List<UserFollowSubreddit> u = userFollowSubredditService.searchByDNIUser(dni);
+			if (u.size() != 0) {
+				model.addAttribute("messageError", "Para eliminar este usuario debe dejar de seguir a sus subreddits");
+				model.addAttribute("pageToReturn", "users");
+				return "error";
+			} else {
+				userService.remove(user);
+				return "redirect:/users";
+			}
 		} else {
 			model.addAttribute("messageError", "Usuario no encontrado");
 			model.addAttribute("pageToReturn", "users");

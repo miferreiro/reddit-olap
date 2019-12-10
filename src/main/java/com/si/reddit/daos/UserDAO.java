@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.si.reddit.entities.User;
 
 public interface UserDAO extends JpaRepository<User, String>{
-	List<User> findByNameContaining(String name);
+	List<User> findByName(String name);
 }
