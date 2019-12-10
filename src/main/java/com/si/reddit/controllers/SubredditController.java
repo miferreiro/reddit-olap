@@ -69,12 +69,13 @@ public class SubredditController {
 	}
 	
 	@PostMapping("add_subreddit")
-	public String createSubreddit(@Valid @ModelAttribute Subreddit subreddit, BindingResult result) {
+	public String createSubreddit(@Valid @ModelAttribute Subreddit subreddit, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			subredditService.create(subreddit);
 			return "redirect:/subreddits";
 		} else {
-			return null;
+			model.addAttribute("isNew", true);
+			return "subreddit/edit_subreddit";
 		}
 	}
 	

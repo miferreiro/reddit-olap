@@ -3,16 +3,32 @@ package com.si.reddit.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 @Entity
 public class User implements Serializable {
 
     @Id
+    @Size(min = 9, max = 9, message = "El atributo DNI tiene una longitud incorrecta (Longitud correcta: 9).")
+    @Pattern(regexp="\\d{8}[A-HJ-NP-TV-Z]", message = "El atributo DNI tiene que tener una estructura de 8 dígitos y 1 letra.")
+    @Column(length = 9)
     private String DNI;
     
+    @NotNull
+    @NotEmpty(message = "El atributo nombre no puede ser vacío.")
+    @Size(max = 30, message = "El atributo nombre tiene una longitud incorrecta (Longitud maxima: 30).")
+    @Column(length = 30)
     private String name;
     
+    @NotNull
+    @Min(value = 0, message = "El atributo numero de trofeos debe tener un valor mayor que 0.")
     private int numTrophies;
 
     public User() {

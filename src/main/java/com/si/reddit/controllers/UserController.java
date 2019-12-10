@@ -70,12 +70,13 @@ public class UserController {
 	}
 	
 	@PostMapping("add_user")
-	public String createUser(@Valid @ModelAttribute User user, BindingResult result) {
+	public String createUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			userService.create(user);
 			return "redirect:/users";
 		} else {
-			return null;
+			model.addAttribute("isNew", true);
+			return "user/edit_user";
 		}
 	}
 	
@@ -94,12 +95,15 @@ public class UserController {
 	}
 
 	@PostMapping("{dni}")
-	public String refreshUser(@Valid User user, BindingResult result) {
+	public String refreshUser(@Valid User user, BindingResult result, Model model, @PathVariable("dni") String dni) {
+		user.setDNI(dni);
 		if (!result.hasErrors()) {
 			userService.edit(user);
 			return "redirect:/users";
 		} else {
-			return null;
+			model.addAttribute("user", user);
+			model.addAttribute("isNew", false);
+			return "user/edit_user";
 		}
 	}
 

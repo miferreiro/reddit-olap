@@ -4,27 +4,29 @@
 	<br/>
 	<form th:object="${user}"id="user-form" method="post">
 		<div class="form-group row">
-			<label for="DNI" class="col-sm-3 control-label">DNI</label>
+			<label for="DNI" class="col-sm-3 control-label font-weight-bold" style="font-size:20px">DNI:</label>
 			<div class="col-sm-4">
-				<input class="form-control" th:field="*{DNI}" size="9" maxlength="9" required="required" placeholder="Introducir DNI..."/>
+				<input class="form-control" th:field="*{DNI}" maxlength="9" required="required" placeholder="Introducir DNI..." th:disabled="${!isNew}"/>
 			</div>
+			<div class="col-sm-4" th:if="${#fields.hasErrors('DNI')}" th:errors="*{DNI}" style = "color:red">DNI Error</div>	
 		</div>	
 		<div class="form-group row">
-			<label for="name" class="col-sm-3 control-label">Nombre</label>
+			<label for="name" class="col-sm-3 control-label font-weight-bold" style="font-size:20px">Nombre:</label>
 			<div class="col-sm-4">
-				<input class="form-control" th:field="*{name}" size="30" maxlength="30" placeholder="Introducir nombre..."/>
-			</div>	
+				<input class="form-control" th:field="*{name}" size="30" maxlength="30" required="required" placeholder="Introducir nombre..."/>				
+			</div>
+			<div class="col-sm-4" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style = "color:red">Name Error</div>	
 		</div>	
 		<div class="form-group row">
-			<label for="numTrophies" class="col-sm-3 control-label">Numero de trofeos</label>
+			<label for="numTrophies" class="col-sm-3 control-label font-weight-bold" style="font-size:20px">Numero de trofeos:</label>
 			<div class="col-sm-4">
-				<input class="form-control" th:field="*{numTrophies}" size="5" maxlength="5" placeholder="Introducir número de trofeos..."/>
+				<input class="form-control" th:field="*{numTrophies}" size="5" maxlength="5" required="required" placeholder="Introducir número de trofeos..."/>
 			</div>
+			<div class="col-sm-4" th:if="${#fields.hasErrors('numTrophies')}" th:errors="*{numTrophies}" style = "color:red">numTrophies Error</div>
 		</div>
 		<div class="form-group row">
 			<div class="col-3">
-				<button type="submit" class="btn btn-lg btn-block btn-primary" th:with="text=${isNew} ? 'Crear' : 'Guardar'" th:text="${text}">
-				Guardar</button>
+				<button type="submit" class="btn btn-lg btn-block btn-primary" th:with="text=${isNew} ? 'Crear' : 'Editar'" th:text="${text}">Editar</button>
 			</div>
 		</div>
 	</form>

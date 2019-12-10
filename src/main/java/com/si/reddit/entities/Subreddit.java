@@ -3,18 +3,30 @@ package com.si.reddit.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 @Entity
 public class Subreddit implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @NotEmpty(message = "El atributo nombre no puede ser vacío.")
+    @Size(max = 30, message = "El atributo nombre tiene una longitud incorrecta (Longitud maxima: 30).")
+    @Column(length = 30)
     private String name;
 
+    @NotNull
+    @NotEmpty(message = "El atributo descripción no puede ser vacío.")
+    @Size(max = 200, message = "El atributo descripción tiene una longitud incorrecta (Longitud maxima: 200).")
+    @Column(length = 200)
     private String description;
 
     public Subreddit() {
