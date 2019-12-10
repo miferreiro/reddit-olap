@@ -11,4 +11,7 @@ public interface UserFollowSubredditService {
 	public void remove(UserFollowSubreddit userFollowSubreddit);
 	public UserFollowSubreddit searchByIds(String DNI, Long id);
 	public List<UserFollowSubreddit> searchAll();
+	public List<UserFollowSubreddit> searchByDNIUser(String DNIUser);
+	public List<UserFollowSubreddit> searchByIdSubreddit(Long id);
+	public List<UserFollowSubreddit> searchByNameSubreddit(String name);
 }

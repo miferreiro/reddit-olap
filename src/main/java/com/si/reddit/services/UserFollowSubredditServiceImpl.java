@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.si.reddit.daos.UserDAO;
+import com.si.reddit.daos.SubredditDAO;
 import com.si.reddit.daos.UserFollowSubredditDAO;
 import com.si.reddit.entities.UserFollowSubreddit;
 import com.si.reddit.entities.UserFollowSubredditID;
@@ -37,5 +39,23 @@ public class UserFollowSubredditServiceImpl implements UserFollowSubredditServic
 	@Transactional(readOnly = true)
 	public List<UserFollowSubreddit> searchAll() {
 		return dao.findAll();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<UserFollowSubreddit> searchByDNIUser(String user) {
+		return dao.findByUserDNI(user);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<UserFollowSubreddit> searchByIdSubreddit(Long id) {
+		return dao.findBySubredditId(id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<UserFollowSubreddit> searchByNameSubreddit(String name) {
+		return dao.findBySubredditName(name);
 	}
 }

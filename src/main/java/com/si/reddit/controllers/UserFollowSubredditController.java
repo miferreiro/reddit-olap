@@ -1,5 +1,6 @@
 package com.si.reddit.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -42,13 +43,20 @@ public class UserFollowSubredditController {
 	}
 
 	@PostMapping
-	public String refreshListUsersFollowSubreddit(@RequestParam(required = false) String dni, Long id, Model model) {
-		List<UserFollowSubreddit> usersFollowSubreddit;
-		if ((dni != null) && !dni.isEmpty()) {
-			//usersFollowSubreddit = userFollowSubredditService.searchByName(nameUser);
-			usersFollowSubreddit = userFollowSubredditService.searchAll();
+	public String refreshListUsersFollowSubreddit(@RequestParam(required = false) String DNIUser, String nameSubreddit, Model model) {
+		List<UserFollowSubreddit> usersFollowSubreddit = new ArrayList<>();
+		if (((DNIUser != null) && !DNIUser.isEmpty())) {
+			usersFollowSubreddit = userFollowSubredditService.searchByDNIUser(DNIUser);
 		} else {
-			usersFollowSubreddit = userFollowSubredditService.searchAll();
+			if (((nameSubreddit != null) && !nameSubreddit.isEmpty())) {
+				usersFollowSubreddit = userFollowSubredditService.searchByNameSubreddit(nameSubreddit);
+			} else {
+				usersFollowSubreddit = userFollowSubredditService.searchAll();				
+			}
+		}
+		
+		if (usersFollowSubreddit.size() == 1 && usersFollowSubreddit == null) {
+			usersFollowSubreddit = new ArrayList<>();
 		}
 		model.addAttribute("usersFollowSubreddit", usersFollowSubreddit);
 		return "follows/list_user_follow_subreddit";
@@ -80,7 +88,6 @@ public class UserFollowSubredditController {
 	@PostMapping("add_user_follow_subreddit")
 	public String createUserFollowSubredditView(String user, Long subreddit) {
 		User userObject = userService.searchByDNI(user);
-		
 		Subreddit subredditObject = subredditService.searchById(Long.valueOf(subreddit));
 		userFollowSubredditService.create(new UserFollowSubreddit(userObject, subredditObject));
 		return "redirect:/follows";
