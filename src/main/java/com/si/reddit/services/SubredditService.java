@@ -9,5 +9,5 @@ public interface SubredditService {
 	public void remove(Subreddit subreddit);
 	public Subreddit searchById(Long id);
 	public List<Subreddit> searchAll();
-	public List<Subreddit> searchByName(String pattern);
+	public List<Subreddit> searchByName(String name);
 }

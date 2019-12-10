@@ -2,6 +2,7 @@ package com.si.reddit.controllers;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.si.reddit.entities.Subreddit;
+import com.si.reddit.entities.UserFollowSubreddit;
 import com.si.reddit.services.SubredditService;
+import com.si.reddit.services.UserFollowSubredditService;
 
 @Controller
 @RequestMapping("/subreddits")
@@ -24,6 +27,9 @@ public class SubredditController {
 	@Autowired
 	SubredditService subredditService;
 
+	@Autowired
+	UserFollowSubredditService userFollowSubredditService;
+	
 	@GetMapping
 	public String listSubreddits(Model model) {
 		List<Subreddit> subreddits = subredditService.searchAll();
@@ -50,8 +56,15 @@ public class SubredditController {
 	public String removeSubreddit(@PathVariable("id") Long id, Model model) {
 		Subreddit subreddit = subredditService.searchById(id);
 		if (subreddit != null) {
-			subredditService.remove(subreddit);
-			return "redirect:/subreddits";
+			List<UserFollowSubreddit> u = userFollowSubredditService.searchByIdSubreddit(id);
+			if (u.size() != 0) {
+				model.addAttribute("messageError", "Para eliminar este subreddit debe dejar de tener seguidores");
+				model.addAttribute("pageToReturn", "subreddits");
+				return "error";
+			} else {
+				subredditService.remove(subreddit);
+				return "redirect:/subreddits";
+			}
 		} else {
 			model.addAttribute("messageError", "Subreddit no encontrado");
 			model.addAttribute("pageToReturn", "subreddits");
@@ -80,12 +93,12 @@ public class SubredditController {
 	
 	@GetMapping("{id}")
 	public String editSubredditView(@PathVariable("id") Long id, Model model) {
-		Subreddit subreddit = subredditService.searchById(id);
-		if (subreddit != null) {
+		try {
+			Subreddit subreddit = subredditService.searchById(id);
 			model.addAttribute("subreddit", subreddit);
 			model.addAttribute("isNew", false);
 			return "subreddit/edit_subreddit";
-		} else {
+		} catch (EntityNotFoundException e) {
 			model.addAttribute("messageError", "Subreddit no encontrado");
 			model.addAttribute("pageToReturn", "subreddits");
 			return "error";
@@ -93,13 +106,15 @@ public class SubredditController {
 	}
 
 	@PostMapping("{id}")
-	public String refreshSubreddit(@Valid Subreddit subreddit, BindingResult result) {
+	public String refreshSubreddit(@Valid Subreddit subreddit, BindingResult result, Model model, @PathVariable("id") Long id) {
+		subreddit.setId(id);
 		if (!result.hasErrors()) {
 			subredditService.edit(subreddit);
 			return "redirect:/subreddits";
 		} else {
-			return null;
+			model.addAttribute("subreddit", subreddit);
+			model.addAttribute("isNew", false);
+			return "subreddit/edit_subreddit";
 		}
 	}
-
 }

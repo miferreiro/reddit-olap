@@ -46,7 +46,7 @@ public class SubredditServiceImpl implements SubredditService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Subreddit> searchByName(String pattern) {
-		return dao.findByNameContaining(pattern);
+	public List<Subreddit> searchByName(String name) {
+		return dao.findByName(name);
 	}
 }
