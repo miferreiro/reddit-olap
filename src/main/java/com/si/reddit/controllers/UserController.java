@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -84,8 +83,15 @@ public class UserController {
 	@PostMapping("add_user")
 	public String createUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
-			userService.create(user);
-			return "redirect:/users";
+			User u = userService.searchByDNI(user.getDNI());
+			if (u == null) {
+				userService.create(user);
+				return "redirect:/users";
+			} else {
+				model.addAttribute("messageError", "El usuario introducido ya se encuentra almacenado.");
+				model.addAttribute("pageToReturn", "users");
+				return "error";
+			}
 		} else {
 			model.addAttribute("isNew", true);
 			return "user/edit_user";
