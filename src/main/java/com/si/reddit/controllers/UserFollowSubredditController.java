@@ -3,17 +3,12 @@ package com.si.reddit.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -77,7 +72,6 @@ public class UserFollowSubredditController {
 
 	@GetMapping("add_user_follow_subreddit")
 	public String addUserFollowSubredditView(Model model) {
-		UserFollowSubreddit userFollowSubreddit = new UserFollowSubreddit();
 		List<User> users = userService.searchAll();
 		List<Subreddit> subreddits = subredditService.searchAll();
 		model.addAttribute("users", users);
@@ -88,7 +82,7 @@ public class UserFollowSubredditController {
 	@PostMapping("add_user_follow_subreddit")
 	public String createUserFollowSubredditView(String user, Long subreddit) {
 		User userObject = userService.searchByDNI(user);
-		Subreddit subredditObject = subredditService.searchById(Long.valueOf(subreddit));
+		Subreddit subredditObject = subredditService.searchById(Long.valueOf(subreddit));	
 		userFollowSubredditService.create(new UserFollowSubreddit(userObject, subredditObject));
 		return "redirect:/follows";
 	}
