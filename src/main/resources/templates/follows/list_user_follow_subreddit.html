@@ -28,6 +28,7 @@
 				<th class="text-center">DNI</th>
 				<th class="text-center" th:text="#{UserName}"></th>
 				<th class="text-center" th:text="#{SubredditName}"></th>
+				<th class="text-center" th:text="#{DateStartFollow}"></th>
 				<th class="text-center" th:text="#{Actions}"></th>
 			</tr>
 		</thead>
@@ -38,6 +39,7 @@
 				</td>
 				<td class="text-center" th:text="${follow.user.name}"/>
 				<td class="text-center" th:text="${follow.subreddit.name}"/>
+				<td class="text-center" th:text="${follow.dateStartFollow}"/>
 				<td class="text-center">
 					<a class="btn btn-danger" th:href="@{/follows/__${follow.subreddit.id}__/__${follow.user.DNI}__/remove}" th:text="#{Delete}"></a>
 				</td>

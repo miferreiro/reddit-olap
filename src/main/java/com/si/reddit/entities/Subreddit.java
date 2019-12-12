@@ -18,14 +18,14 @@ public class Subreddit implements Serializable{
     private Long id;
 
     @NotNull
-    @NotEmpty(message = "El atributo nombre no puede ser vacío.")
-    @Size(max = 30, message = "El atributo nombre tiene una longitud incorrecta (Longitud maxima: 30).")
+    @NotEmpty(message = "{NameErrorEmpty}")
+    @Size(max = 30, message = "{NameErrorSize}")
     @Column(length = 30)
     private String name;
 
     @NotNull
-    @NotEmpty(message = "El atributo descripción no puede ser vacío.")
-    @Size(max = 200, message = "El atributo descripción tiene una longitud incorrecta (Longitud maxima: 200).")
+    @NotEmpty(message = "{DescriptionErrorEmpty}")
+    @Size(max = 200, message = "{DescriptionErrorSize}")
     @Column(length = 200)
     private String description;
 

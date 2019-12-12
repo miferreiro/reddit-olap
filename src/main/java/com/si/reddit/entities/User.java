@@ -16,19 +16,19 @@ import javax.validation.constraints.Size;
 public class User implements Serializable {
 
     @Id
-    @Size(min = 9, max = 9, message = "El atributo DNI tiene una longitud incorrecta (Longitud correcta: 9).")
-    @Pattern(regexp="\\d{8}[A-HJ-NP-TV-Z]", message = "El atributo DNI tiene que tener una estructura de 8 dígitos y 1 letra.")
+    @Size(min = 9, max = 9, message = "{DNIErrorSize}")
+    @Pattern(regexp="\\d{8}[A-HJ-NP-TV-Z]", message = "{DNIErrorPattern}")
     @Column(length = 9)
     private String DNI;
     
     @NotNull
-    @NotEmpty(message = "El atributo nombre no puede ser vacío.")
-    @Size(max = 30, message = "El atributo nombre tiene una longitud incorrecta (Longitud maxima: 30).")
+    @NotEmpty(message = "{NameErrorEmpty}")
+    @Size(max = 30, message = "{NameErrorSize}")
     @Column(length = 30)
     private String name;
     
     @NotNull
-    @Min(value = 0, message = "El atributo numero de trofeos debe tener un valor mayor que 0.")
+    @Min(value = 0, message = "{NumTrophiesErrorMin}")
     private int numTrophies;
 
     public User() {
