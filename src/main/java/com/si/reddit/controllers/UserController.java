@@ -6,6 +6,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,13 +32,13 @@ public class UserController {
 	@Autowired
 	UserFollowSubredditService userFollowSubredditService;
 	
+	@Autowired
+    private MessageSource messageSource;
+	
 	@GetMapping
 	public String listUsers(Model model) {
 		List<User> users = userService.searchAll();
 		model.addAttribute("users", users);
-		model.addAttribute("DNI", "");
-		model.addAttribute("name", "");
-		model.addAttribute("numTrophies", "");
 		return "user/list_users";
 	}
 
@@ -58,7 +60,7 @@ public class UserController {
 		if (user != null) {
 			List<UserFollowSubreddit> u = userFollowSubredditService.searchByDNIUser(dni);
 			if (u.size() != 0) {
-				model.addAttribute("messageError", "Para eliminar este usuario debe dejar de seguir a sus subreddits");
+				model.addAttribute("messageError", messageSource.getMessage("UserErrorRemove", new Object[] {},LocaleContextHolder.getLocale()));
 				model.addAttribute("pageToReturn", "users");
 				return "error";
 			} else {
@@ -66,7 +68,7 @@ public class UserController {
 				return "redirect:/users";
 			}
 		} else {
-			model.addAttribute("messageError", "Usuario no encontrado");
+			model.addAttribute("messageError", messageSource.getMessage("UserErrorNotFound", new Object[] {},LocaleContextHolder.getLocale()));
 			model.addAttribute("pageToReturn", "users");
 			return "error";
 		}
@@ -88,7 +90,7 @@ public class UserController {
 				userService.create(user);
 				return "redirect:/users";
 			} else {
-				model.addAttribute("messageError", "El usuario introducido ya se encuentra almacenado.");
+				model.addAttribute("messageError", messageSource.getMessage("UserErrorCreate", new Object[] {},LocaleContextHolder.getLocale()));
 				model.addAttribute("pageToReturn", "users");
 				return "error";
 			}
@@ -106,7 +108,7 @@ public class UserController {
 			model.addAttribute("isNew", false);
 			return "user/edit_user";
 		} catch (EntityNotFoundException e) {
-			model.addAttribute("messageError", "Usuario no encontrado");
+			model.addAttribute("messageError", messageSource.getMessage("UserErrorNotFound", new Object[] {},LocaleContextHolder.getLocale()));
 			model.addAttribute("pageToReturn", "users");
 			return "error";
 		}

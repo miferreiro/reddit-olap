@@ -6,6 +6,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,13 +32,13 @@ public class SubredditController {
 	@Autowired
 	UserFollowSubredditService userFollowSubredditService;
 	
+	@Autowired
+    private MessageSource messageSource;
+	
 	@GetMapping
 	public String listSubreddits(Model model) {
 		List<Subreddit> subreddits = subredditService.searchAll();
 		model.addAttribute("subreddits", subreddits);
-		model.addAttribute("id", "");
-		model.addAttribute("name", "");
-		model.addAttribute("description", "");
 		return "subreddit/list_subreddits";
 	}
 
@@ -58,7 +60,7 @@ public class SubredditController {
 		if (subreddit != null) {
 			List<UserFollowSubreddit> u = userFollowSubredditService.searchByIdSubreddit(id);
 			if (u.size() != 0) {
-				model.addAttribute("messageError", "Para eliminar este subreddit debe dejar de tener seguidores");
+				model.addAttribute("messageError", messageSource.getMessage("SubredditErrorRemove", new Object[] {},LocaleContextHolder.getLocale()));
 				model.addAttribute("pageToReturn", "subreddits");
 				return "error";
 			} else {
@@ -66,7 +68,7 @@ public class SubredditController {
 				return "redirect:/subreddits";
 			}
 		} else {
-			model.addAttribute("messageError", "Subreddit no encontrado");
+			model.addAttribute("messageError", messageSource.getMessage("SubredditErrorNotFound", new Object[] {},LocaleContextHolder.getLocale()));
 			model.addAttribute("pageToReturn", "subreddits");
 			return "error";
 		}
@@ -99,7 +101,7 @@ public class SubredditController {
 			model.addAttribute("isNew", false);
 			return "subreddit/edit_subreddit";
 		} catch (EntityNotFoundException e) {
-			model.addAttribute("messageError", "Subreddit no encontrado");
+			model.addAttribute("messageError", messageSource.getMessage("SubredditErrorNotFound", new Object[] {},LocaleContextHolder.getLocale()));
 			model.addAttribute("pageToReturn", "subreddits");
 			return "error";
 		}

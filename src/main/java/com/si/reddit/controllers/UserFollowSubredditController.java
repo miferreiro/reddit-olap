@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +26,19 @@ import com.si.reddit.services.SubredditService;
 @Controller
 @RequestMapping("/follows")
 public class UserFollowSubredditController {
+	
 	@Autowired
 	UserFollowSubredditService userFollowSubredditService;
+	
 	@Autowired
 	UserService userService;
+	
 	@Autowired
 	SubredditService subredditService;
+	
+	@Autowired
+    private MessageSource messageSource;
+	
 	@GetMapping
 	public String listUsersFollowSubreddit(Model model) {
 		List<UserFollowSubreddit> usersFollowSubreddit = userFollowSubredditService.searchAll();
@@ -64,7 +73,7 @@ public class UserFollowSubredditController {
 			userFollowSubredditService.remove(userFollowSubreddit);
 			return "redirect:/follows";
 		} else {
-			model.addAttribute("messageError", "Seguidor " + DNI + " de " + id + " no encontrado");
+			model.addAttribute("messageError", messageSource.getMessage("SubredditErrorNotFound", new Object[] {DNI,id},LocaleContextHolder.getLocale()));
 			model.addAttribute("pageToReturn", "follows");
 			return "error";
 		}
