@@ -1,26 +1,26 @@
 <body th:replace="~{fragments/layout::layout(~{this::body})}">
-	<h1 class="center-text">Listado de usuarios</h1>
+	<h1 class="center-text" th:text="#{UserList}"></h1>
 	<br/>
 	<form th:action="@{/users}" method="post" id="buscar-form">
 		<div class="form-group row">
-			<label for="name" class="col-2 control-label font-weight-bold" style="font-size:20px">Nombre:</label>
+			<label for="name" class="col-2 control-label font-weight-bold" style="font-size:20px" th:text="#{Name.}"></label>
 			<div class="col-sm-7 ">
-				<input class="form-control" th:name="nameUser" size="30" maxlength="80" placeholder="Introducir nombre a buscar..." />
+				<input class="form-control" th:name="nameUser" size="30" maxlength="80" th:placeholder="#{EnterUsernameSearch}" />
 			</div>
 			<div class="col-sm-3">
-				<button type="submit" class="btn btn-block btn-outline-info">Buscar</button>
+				<button type="submit" class="btn btn-block btn-outline-info" th:text="#{Search}"></button>
 			</div>
 		</div>		
 	</form>
-	<a class="btn btn-block btn-primary" th:href="@{/users/add_user}">A&#241;adir nuevo usuario</a>
+	<a class="btn btn-block btn-primary" th:text="#{AddNewUser}" th:href="@{/users/add_user}"></a>
 	<br/>
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th class="text-center">DNI</th>
-				<th class="text-center">Nombre</th>
-				<th class="text-center">Numero de trofeos</th>
-				<th class="text-center">Acciones</th>
+				<th class="text-center" th:text="#{Name}"></th>
+				<th class="text-center" th:text="#{NumTrophies}"></th>
+				<th class="text-center" th:text="#{Actions}"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,8 +31,8 @@
 				<td class="text-center" th:text="${user.name}"/>
 				<td class="text-center" th:text="${user.numTrophies}"/>
 				<td class="text-center">
-					<a class="btn btn-primary" th:href="@{/users/__${user.DNI}__}">Editar</a> 
-					<a class="btn btn-danger" th:href="@{/users/__${user.DNI}__/remove}">Borrar</a>
+					<a class="btn btn-primary" th:href="@{/users/__${user.DNI}__}" th:text="#{Edit}"></a> 
+					<a class="btn btn-danger" th:href="@{/users/__${user.DNI}__/remove}" th:text="#{Delete}"></a>
 				</td>
 			</tr>
 		</tbody>

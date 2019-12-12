@@ -11,11 +11,11 @@
 	<hr/>
 	<!-- Main fragment -->
 	<main role="main" class="container">
-		<h1 class="text-danger">Mensaje de error</h1>
+		<h1 class="text-danger" th:text="#{MessageError}"></h1>
 		</br>
-		<p th:text="${messageError} ? ${messageError} : 'Se ha producido un error'"></p>	
+		<p th:text="${messageError} ? ${messageError} : #{ErrorOcurred}"></p>	
 		</br>
-		<a class="btn btn-info" th:href="${pageToReturn} ? @{/__${pageToReturn}__} : @{/}">Volver</a>
+		<a class="btn btn-info" th:text="#{Back}" th:href="${pageToReturn} ? @{/__${pageToReturn}__} : @{/}"></a>
 	</main>
 	
 	<!-- Footer fragment -->

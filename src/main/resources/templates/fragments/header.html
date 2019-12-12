@@ -9,13 +9,21 @@
 		<div class="collapse navbar-collapse" id="navbars">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/users}">Usuarios</a>
+					<a class="nav-link" th:text="#{Users}" th:href="@{/users}"></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/subreddits}">Subreddits</a>
+					<a class="nav-link" th:text="#{Subreddits}" th:href="@{/subreddits}"></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/follows}">Follows</a>
+					<a class="nav-link" th:text="#{Follows}" th:href="@{/follows}"></a>
+				</li>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{?lang=en}"><img src="https://img.icons8.com/cute-clipart/48/000000/great-britain.png"></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{?lang=es}"><img src="https://img.icons8.com/color/48/000000/spain.png"></a>
 				</li>
 			</ul>
 		</div>
