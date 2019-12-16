@@ -49,4 +49,10 @@ public class SubredditServiceImpl implements SubredditService {
 	public List<Subreddit> searchByName(String name) {
 		return dao.findByName(name);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public boolean existsById(Long id) {
+		return dao.existsById(id);
+	}
 }

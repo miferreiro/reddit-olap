@@ -10,4 +10,5 @@ public interface UserService {
 	public User searchByDNI(String dni);
 	public List<User> searchAll();
 	public List<User> searchByName(String name);
+	public boolean existsByDNI(String dni);
 }

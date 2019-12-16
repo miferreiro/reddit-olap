@@ -85,8 +85,7 @@ public class UserController {
 	@PostMapping("add_user")
 	public String createUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
-			User u = userService.searchByDNI(user.getDNI());
-			if (u == null) {
+			if (!userService.existsByDNI(user.getDNI())) {
 				userService.create(user);
 				return "redirect:/users";
 			} else {

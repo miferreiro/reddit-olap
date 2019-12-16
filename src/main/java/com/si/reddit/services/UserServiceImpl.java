@@ -49,4 +49,11 @@ public class UserServiceImpl implements UserService {
 	public List<User> searchByName(String name) {
 		return dao.findByName(name);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public boolean existsByDNI(String dni) {
+		return dao.existsById(dni);
+	}
+	
 }
