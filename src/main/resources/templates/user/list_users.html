@@ -37,4 +37,6 @@
 			</tr>
 		</tbody>
 	</table>
+	<div class="alert alert-warning mx-auto w-50 p-3 text-center" th:if="${users==null or users.empty}" th:text="#{emptyListUser}">
+    </div>
 </body>
