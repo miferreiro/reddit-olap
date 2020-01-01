@@ -54,6 +54,15 @@ public class SubredditController {
 		return "subreddit/list_subreddits";
 	}
 
+
+	@GetMapping("{id}/followers")
+	public String showfollowersSubreddits(@PathVariable("id") Long id,  Model model) {
+		List<UserFollowSubreddit> usersFollowSubreddit;
+		usersFollowSubreddit = userFollowSubredditService.searchByIdSubreddit(id);
+		model.addAttribute("usersFollowSubreddit", usersFollowSubreddit);
+		return "follows/list_user_follow_subreddit";
+	}
+	
 	@GetMapping("{id}/remove")
 	public String removeSubreddit(@PathVariable("id") Long id, Model model) {
 		Subreddit subreddit = subredditService.searchById(id);
