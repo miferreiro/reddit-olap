@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Comment implements Serializable{
@@ -20,8 +25,14 @@ public class Comment implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull
+    @NotEmpty(message = "{BodyCommentErrorEmpty}")
+    @Size(max = 300, message = "{BodyCommentErrorSize}")
+    @Column(length = 300)
     private String body;
     
+    @NotNull
+    @Min(value = 0, message = "{ScoreErrorMin}")
     private int score;
 
     @Temporal(TemporalType.DATE)
